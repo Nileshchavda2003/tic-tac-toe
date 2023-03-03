@@ -40,5 +40,8 @@
 } */
 
 #reset:hover {
-	background-color: #eee;
+	background-color: #1ecf41;
+}
+#playerO:hover,#playerX:hover {
+	background-color: #7032cd;
 }
