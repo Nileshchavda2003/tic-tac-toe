@@ -1,21 +1,27 @@
-
-let turn = '';
-let isgameover = false;
-
-// Turn change condition.....
-
-const changeTurn = () => {
-    playerX.addEventListener('click', () => {
-        turn = "X";
-    });
-    playerO.addEventListener('click', () => {
+let turn = " " ;
+playerX.addEventListener('click', () => {
+    turn = "X";
+});
+ playerO.addEventListener('click', () => {
         turn = "0";
     });
-    // return turn === "X"? "0": "X"
-    return turn;
+//..................
+// Function is called, return value will end up in x
+
+
+
+//.......................
+const changeTurn = () => {
+
+        return turn === "X"? "0": "X"
+    // return turn;
+
 
 }
-// winning Conditions
+//.........................................................
+
+
+// Winning and draw conditions
 const checkWin = () => {
     let boxtext = document.getElementsByClassName('boxtext');
     let wins = [
@@ -27,27 +33,32 @@ const checkWin = () => {
         [2, 5, 8],
         [0, 4, 8],
         [2, 4, 6]
-    ]
+    ];
+
+    let Draw = true;
     wins.forEach(e => {
         if ((boxtext[e[0]].innerText === boxtext[e[1]].innerText) &&
             (boxtext[e[2]].innerText === boxtext[e[1]].innerText) &&
             (boxtext[e[0]].innerText !== "")) {
-            document.querySelector('.info').innerText = boxtext[e[0]].innerText + " Won"
-            isgameover = true
-            if(isgameover){
-                document.getElementById('playerO').Disabled;
-                document.getElementById('playerX').Disabled;
-            }
-          
+            document.querySelector('.info').innerText = boxtext[e[0]].innerText + " Won";
+            isgameover = true;
+            Draw = false;
         }
-        // else{
-        //     document.querySelector('.info').innerText = boxtext[e[0]].innerText + " Tie"
-        //     isgameover = true
+    });
 
-        //  }
-    })
-}
+    if (Draw) {
+        const allElementsNotNull = Array.from(boxtext).every(function (element) {
+            return element.innerText !== '';
+        });
+        if (allElementsNotNull) {
+            document.querySelector('.info').innerText = "It's a draw!";
+            isgameover = true;
+        }
+    }
+};
 
+
+//........................................
 let boxes = document.getElementsByClassName("square");
 Array.from(boxes).forEach(element => {
     let boxtext = element.querySelector('.boxtext');
@@ -65,14 +76,13 @@ Array.from(boxes).forEach(element => {
     })
 })
 
+
 reset.addEventListener('click', () => {
     let boxtexts = document.querySelectorAll('.boxtext');
     Array.from(boxtexts).forEach(element => {
         element.innerText = ""
     });
-    turn = changeTurn();
+    // turn = changeTurn();
     isgameover = false
-    // document.querySelector(".line").style.width = "0vw";
     document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
-    // document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "0px"
 })
